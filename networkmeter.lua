@@ -22,7 +22,7 @@ local arrowUp = string.char(0xe2, 0x86, 0x91)
 --- Helper functions start
 
 -- Returns the nth element in an iterator, returns nil if it doesn't exist
-function nthElement(iter, n)
+local function nthElement(iter, n)
   local tmp
   repeat
     tmp = iter()
@@ -35,7 +35,7 @@ function nthElement(iter, n)
 end
 
 -- Returns the iterator after removing n elements, returns nil if it has less than n elements
-function skipNElements(iter, n)
+local function skipNElements(iter, n)
   while n > 0 do
     if iter() == nil then
       return nil
@@ -46,7 +46,7 @@ function skipNElements(iter, n)
 end
 
 -- Builds a list from the iterator elements
-function buildArrayFromIterator(iter)
+local function buildArrayFromIterator(iter)
   local res = {}
   for elem in iter do
     table.insert(res, elem)
@@ -55,7 +55,7 @@ function buildArrayFromIterator(iter)
 end
 
 -- Returns a list of token indices in a given string after tokenizing it using the given delimiters
-function tokenIndices(targetString, targetToken, delims)
+local function tokenIndices(targetString, targetToken, delims)
   local res = {}
   local columnCount = 1
 
@@ -71,11 +71,19 @@ function tokenIndices(targetString, targetToken, delims)
   return res
 end
 
+
+local function diffAbs(a, b)
+  a = a or 0
+  b = b or 0
+
+  return math.abs(a - b)
+end
+
 --- Helper functions end
 ------------------------------------------
 
 
-function getThroughput()
+local function getThroughput()
   local devFileIterator = io.lines("/proc/net/dev")
 
   local receivedBytes = 0
@@ -100,7 +108,7 @@ function getThroughput()
   return receivedBytes, transmittedBytes
 end
 
-function unitDetection(byteCount, down)
+local function unitDetection(byteCount, down)
   local unitIndex = 1
 
   while byteCount > 1024 and unitIndex <= #unitTable do
@@ -117,13 +125,6 @@ function unitDetection(byteCount, down)
   end
 
   return byteCount.." "..unitTable[unitIndex].."/sec "..arrow
-end
-
-function diffAbs(a, b)
-  a = a or 0
-  b = b or 0
-
-  return math.abs(a - b)
 end
 
 function networkmeter.new()
