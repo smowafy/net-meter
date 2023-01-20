@@ -1,5 +1,6 @@
 # Network Throughput widget for Awesome WM
 
+
 ## Prerequisites
 Awesome Window Manager (https://awesomewm.org/)
 
